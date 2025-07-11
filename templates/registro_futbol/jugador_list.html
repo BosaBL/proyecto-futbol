@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}
+    Lista de Jugadores
+{% endblock title %}
+{% block content %}
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-12">
+                    <div class="container-sm d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="text-center">Lista de Jugadores</h2>
+                        <div>
+                            <a href="{% url 'jugador_create' %}" class="btn btn-primary btn-sm">Crear Jugador</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4 mx-auto">
+            {% for jugador in jugadores %}
+                <div class="col-auto">
+                    {# Card #}
+                    <div class="card shadow-sm h-100" style="width: 18rem; min-width: 280px">
+                        <div class="position-relative" style="height: 200px;">
+                            <img src="{{ jugador.foto.url }}"
+                                 class="card-img-top position-absolute top-0 start-0 w-100 h-100 object-fit-contain"
+                                 alt="Escudo {{ jugador.nombre }}"
+                                 style="max-height: 200px">
+                        </div>
+                        {# Details #}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ jugador.nombre }} ({{ jugador.pais }})</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ jugador.equipo }}</h6>
+                            <p class="card-text text-muted small flex-grow-1">
+                                Edad: {{ jugador.edad }} años
+                                <br>
+                                Posición: {{ jugador.posicion }}
+                            </p>
+                            <div class="mt-auto d-flex flex-column gap-2">
+                                <a href="{% url 'jugador_edit' jugador.id %}"
+                                   class="btn btn-warning btn-sm w-100">Actualizar</a>
+                                <a href="{% url 'jugador_delete' jugador.id %}"
+                                   class="btn btn-danger btn-sm w-100">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <h4 class="alert-heading">No hay equipos disponibles</h4>
+                        <p class="mb-0">Aún no se han agregado equipos a la lista.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

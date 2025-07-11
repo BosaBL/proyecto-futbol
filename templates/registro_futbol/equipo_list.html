@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}
+    Lista de Equipos
+{% endblock title %}
+{% block content %}
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-12">
+                    <div class="container-sm d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="text-center">Lista de Equipos</h2>
+                        <div>
+                            <a href="{% url 'equipo_create' %}" class="btn btn-primary btn-sm">Crear Equipo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for equipo in equipos %}
+                <div class="col-auto">
+                    {# Card #}
+                    <div class="card shadow-sm" style="width: 18rem; min-width: 280px;">
+                        <div class="position-relative" style="height: 200px;">
+                            <img src="{{ equipo.escudo.url }}"
+                                 class="card-img-top position-absolute top-0 start-0 w-100 h-100 object-fit-contain"
+                                 alt="Escudo {{ equipo.nombre }}">
+                        </div>
+                        {# Details #}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ equipo.nombre }}</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ equipo.pais }}</h6>
+                            <p class="card-text text-muted small flex-grow-1">Entrenador: {{ equipo.entrenador }}</p>
+                            <div class="mt-auto d-flex flex-column gap-2">
+                                <a href="{% url 'equipo_edit' equipo.pk %}"
+                                   class="btn btn-warning btn-sm w-100">Actualizar</a>
+                                <a href="{% url 'equipo_delete' equipo.pk %}"
+                                   class="btn btn-danger btn-sm w-100">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <h4 class="alert-heading">No hay equipos disponibles</h4>
+                        <p class="mb-0">Aún no se han agregado equipos a la lista.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
